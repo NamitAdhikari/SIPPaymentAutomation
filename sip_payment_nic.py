@@ -161,7 +161,7 @@ action.move_to_element(
     driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[2]/div/div/div/div[2]/div/div[2]/button[1]')
 ).click().perform()
 
-confirm_btn = wait.until(EC.presence_of_element_located(
+confirm_btn = wait.until(EC.element_to_be_clickable(
     (By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[6]/button[1]")))
 confirm_btn.click()
 

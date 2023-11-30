@@ -165,10 +165,14 @@ confirm_btn = wait.until(EC.element_to_be_clickable(
     (By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[6]/button[1]")))
 confirm_btn.click()
 
-# Confirm Payment
-# action.move_to_element(
-#     driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[6]/button[1]")
-# ).click().perform()
+re_confirm_button = wait.until(EC.element_to_be_clickable(
+    (By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[2]/div/div/form/div[1]/button[1]")))
+re_confirm_button.click()
+
+action.move_to_element(
+    driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[6]/div/div/div[2]/div/div/button[3]')
+).click().perform()
+
 print("Payment Successful!")
 
 driver.quit()

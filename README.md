@@ -1,6 +1,6 @@
 ## SIP Payment Automation
 
-This is a simple automation script to automate the payment of SIPs (NIC ASIA currently added) using eSewa payment
+This is a simple automation script to automate the payment of SIPs (N** **** BANK currently added) using e**** payment
 platform. It uses Selenium to automate the browser and the script is written in Python.
 
 ### Requirements
@@ -21,5 +21,5 @@ The shell will prompt you to enter the password(s) if you don't provide it in th
 You can simply run the script using the following command:
 
 ```shell
-python sip_payment_nic.py
+python sip_payment_bank1.py
 ```

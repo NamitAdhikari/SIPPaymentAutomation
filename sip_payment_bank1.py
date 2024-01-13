@@ -24,7 +24,7 @@ PASSWORD = os.getenv("PASSWORD")
 
 # Payment Gateway Creds
 PAYMENT_PLATFORM_USERNAME = os.getenv("PAYMENT_PLATFORM_USERNAME")
-PAYMENT_PLATFORM_PASSWORD = os.getenv("PLATFORM_PLATFORM_PASSWORD")
+PAYMENT_PLATFORM_PASSWORD = os.getenv("PAYMENT_PLATFORM_PASSWORD")
 
 
 class Actions(ActionChains):
@@ -43,7 +43,7 @@ class Actions(ActionChains):
         self.pause(0.4)
 
 
-driver = webdriver.ChromiumEdge()
+driver = webdriver.Chrome()
 driver.get(BASE_URL)
 
 action = Actions(driver)
@@ -74,12 +74,12 @@ action.move_to_element(
 
 # Expand SIP Menu
 action.move_to_element(
-    driver.find_element(By.XPATH, "/html/body/div[1]/aside/section/ul/li[5]/a")
+    driver.find_element(By.XPATH, "/html/body/div[1]/aside/section/ul/li[4]/a/span[1]")
 ).click().perform()
 
 # Click on SIP Payment
 action.move_to_element(
-    driver.find_element(By.XPATH, '/html/body/div[1]/aside/section/ul/li[5]/ul/li[3]/a')
+    driver.find_element(By.XPATH, '/html/body/div[1]/aside/section/ul/li[4]/ul/li[3]/a')
 ).click().perform()
 
 # Load Payments
@@ -129,17 +129,17 @@ input(f"Press Enter when you have topped up Rs. {amount} your ESEWA account...")
 action.send_keys_slowly(
     driver.find_element(By.XPATH,
                         '/html/body/div[2]/div/div[2]/div/div[2]/div/ng-include[1]/div/div/div/div[2]/form/div[1]/input'),
-    ESEWA_USERNAME
+    PAYMENT_PLATFORM_USERNAME
 ).perform()
 
-if not ESEWA_PASSWORD:
-    ESEWA_PASSWORD = input("Please enter your ESEWA Password: ")
+if not PAYMENT_PLATFORM_PASSWORD:
+    PAYMENT_PLATFORM_PASSWORD = input("Please enter your ESEWA Password: ")
 
 # Input Password
 action.send_keys_slowly(
     driver.find_element(By.XPATH,
                         "/html/body/div[2]/div/div[2]/div/div[2]/div/ng-include[1]/div/div/div/div[2]/form/div[2]/input"),
-    ESEWA_PASSWORD
+    PAYMENT_PLATFORM_PASSWORD
 ).perform()
 
 # Login

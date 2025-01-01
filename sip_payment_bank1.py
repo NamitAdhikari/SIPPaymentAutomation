@@ -17,19 +17,19 @@ from selenium.webdriver.support import expected_conditions as EC
 
 load_dotenv()
 
-BASE_URL = os.getenv("SIP_PAYMENT_LOGIN_URL")
+BASE_URL = os.environ["SIP_PAYMENT_LOGIN_URL"]
 # SIP Payment Creds
-USERNAME = os.getenv("USERNAME")
-PASSWORD = os.getenv("PASSWORD")
+USERNAME = os.environ["USERNAME"]
+PASSWORD = os.environ["PASSWORD"]
 
 # Payment Gateway Creds
-PAYMENT_PLATFORM_USERNAME = os.getenv("PAYMENT_PLATFORM_USERNAME")
-PAYMENT_PLATFORM_PASSWORD = os.getenv("PAYMENT_PLATFORM_PASSWORD")
+PAYMENT_PLATFORM_USERNAME = os.environ["PAYMENT_PLATFORM_USERNAME"]
+PAYMENT_PLATFORM_PASSWORD = os.environ["PAYMENT_PLATFORM_PASSWORD"]
 
 
 class Actions(ActionChains):
     def send_keys_slowly(
-            self, element: WebElement, text: str, delay: float = 0.08
+        self, element: WebElement, text: str, delay: float = 0.08
     ) -> "Actions":
         """Send a text to an element one character at a time with a delay."""
         act = self.move_to_element(element).click()
@@ -79,7 +79,7 @@ action.move_to_element(
 
 # Click on SIP Payment
 action.move_to_element(
-    driver.find_element(By.XPATH, '/html/body/div[1]/aside/section/ul/li[4]/ul/li[3]/a')
+    driver.find_element(By.XPATH, "/html/body/div[1]/aside/section/ul/li[4]/ul/li[3]/a")
 ).click().perform()
 
 # Load Payments
@@ -110,7 +110,8 @@ if not elem.is_enabled():
     sys.exit()
 
 amount = driver.find_element(
-    By.XPATH, '/html/body/div[1]/div[4]/div[4]/div/div[2]/div[3]/div/div[2]/div/table/tbody/tr/td[5]'
+    By.XPATH,
+    "/html/body/div[1]/div[4]/div[4]/div/div[2]/div[3]/div/div[2]/div/table/tbody/tr/td[5]",
 ).text
 print(f"Amount to be paid: Rs. {amount}")
 
@@ -119,7 +120,7 @@ action.move_to_element(elem).click().perform()
 
 action.move_to_element(
     driver.find_elements(
-        By.XPATH, '/html/body/div[1]/div[4]/div[5]/div/div/div[2]/table/tbody/tr/td[4]'
+        By.XPATH, "/html/body/div[1]/div[4]/div[5]/div/div/div[2]/table/tbody/tr/td[4]"
     )[0]
 ).click().perform()
 
@@ -127,9 +128,11 @@ input(f"Press Enter when you have topped up Rs. {amount} your ESEWA account...")
 
 # Now, Pay Via Payment Gateway
 action.send_keys_slowly(
-    driver.find_element(By.XPATH,
-                        '/html/body/div[2]/div/div[2]/div/div[2]/div/ng-include[1]/div/div/div/div[2]/form/div[1]/input'),
-    PAYMENT_PLATFORM_USERNAME
+    driver.find_element(
+        By.XPATH,
+        "/html/body/div[2]/div/div[2]/div/div[2]/div/ng-include[1]/div/div/div/div[2]/form/div[1]/input",
+    ),
+    PAYMENT_PLATFORM_USERNAME,
 ).perform()
 
 if not PAYMENT_PLATFORM_PASSWORD:
@@ -137,15 +140,19 @@ if not PAYMENT_PLATFORM_PASSWORD:
 
 # Input Password
 action.send_keys_slowly(
-    driver.find_element(By.XPATH,
-                        "/html/body/div[2]/div/div[2]/div/div[2]/div/ng-include[1]/div/div/div/div[2]/form/div[2]/input"),
-    PAYMENT_PLATFORM_PASSWORD
+    driver.find_element(
+        By.XPATH,
+        "/html/body/div[2]/div/div[2]/div/div[2]/div/ng-include[1]/div/div/div/div[2]/form/div[2]/input",
+    ),
+    PAYMENT_PLATFORM_PASSWORD,
 ).perform()
 
 # Login
 action.move_to_element(
-    driver.find_element(By.XPATH,
-                        "/html/body/div[2]/div/div[2]/div/div[2]/div/ng-include[1]/div/div/div/div[2]/form/div[3]/button[1]")
+    driver.find_element(
+        By.XPATH,
+        "/html/body/div[2]/div/div[2]/div/div[2]/div/ng-include[1]/div/div/div/div[2]/form/div[3]/button[1]",
+    )
 ).click().perform()
 
 # Ask for OTP
@@ -153,24 +160,44 @@ otp = input("Please input OTP here and Press Enter: ")
 
 # Enter OTP
 action.send_keys_slowly(
-    driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[2]/div/input"), otp
+    driver.find_element(
+        By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[2]/div/input"
+    ),
+    otp,
 ).perform()
 
 # Submit
 action.move_to_element(
-    driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[2]/div/div/div/div[2]/div/div[2]/button[1]')
+    driver.find_element(
+        By.XPATH,
+        "/html/body/div[2]/div/div/div[2]/div/div/div/div[2]/div/div[2]/button[1]",
+    )
 ).click().perform()
 
-confirm_btn = wait.until(EC.element_to_be_clickable(
-    (By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[6]/button[1]")))
+confirm_btn = wait.until(
+    EC.element_to_be_clickable(
+        (
+            By.XPATH,
+            "/html/body/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[6]/button[1]",
+        )
+    )
+)
 confirm_btn.click()
 
-re_confirm_button = wait.until(EC.element_to_be_clickable(
-    (By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[2]/div/div/form/div[1]/button[1]")))
+re_confirm_button = wait.until(
+    EC.element_to_be_clickable(
+        (
+            By.XPATH,
+            "/html/body/div[2]/div/div/div[2]/div/div/div/div[2]/div/div/form/div[1]/button[1]",
+        )
+    )
+)
 re_confirm_button.click()
 
 action.move_to_element(
-    driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[6]/div/div/div[2]/div/div/button[3]')
+    driver.find_element(
+        By.XPATH, "/html/body/div[1]/div[4]/div[6]/div/div/div[2]/div/div/button[3]"
+    )
 ).click().perform()
 
 print("Payment Successful!")
